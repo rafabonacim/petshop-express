@@ -17,7 +17,7 @@ servicos =JSON.parse(servicos);
 
 const servicosController = {
     index: (request,response)=>{
-        return response.render('adminServicos', {titulo:'Serviços', servicos:[]});
+        return response.render('adminServicos', {titulo:'Serviços', servicos});
     },
     cadastro: (request,response) =>{
         return response.render('servicosCadastro',{titulo: 'Cadastrar Serviço'});
@@ -28,7 +28,7 @@ const servicosController = {
         servicos.push({id: uuid(),nome, descricao, preco, ilustracao});
         /** converter o array para json  */
         let dadosJson =JSON.stringify(servicos);
-        
+
         /*salva json atulaizado no arquivo*/
         fs.writeFileSync(servicosPath,dadosJson);
 
