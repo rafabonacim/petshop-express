@@ -23,12 +23,15 @@ const servicosController = {
         return response.render('servicosCadastro',{titulo: 'Cadastrar Serviço'});
     },
     salvar:(request,response)=>{
-        let {nome,descricao,preco,ilustracao} = request.body;
+        let {nome,descricao,preco} = request.body;
+
+        /*pegando o nome do arquivo (upload)*/
+        let ilustracao = request.file.path;
+
         /* adiciona o novo servico no array*/
         servicos.push({id: uuid(),nome, descricao, preco, ilustracao});
         /** converter o array para json  */
         let dadosJson =JSON.stringify(servicos);
-
         /*salva json atulaizado no arquivo*/
         fs.writeFileSync(servicosPath,dadosJson);
 
