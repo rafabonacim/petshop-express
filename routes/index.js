@@ -26,6 +26,6 @@ router.get('/pets/:nome', petsController.show);
 
 //router.get('/servicos', servicosController.index);
 
-router.get('/servicos/:nome', servicosController.show);
+// router.get('/servicos/:nome', servicosController.show);
 
 module.exports = router;

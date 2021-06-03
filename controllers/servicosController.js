@@ -26,7 +26,7 @@ const servicosController = {
         let {nome,descricao,preco} = request.body;
 
         /*pegando o nome do arquivo (upload)*/
-        let ilustracao = request.file.path;
+        let ilustracao = request.file.filename;
 
         /* adiciona o novo servico no array*/
         servicos.push({id: uuid(),nome, descricao, preco, ilustracao});
@@ -38,9 +38,42 @@ const servicosController = {
         /*redireciona para lista de servicos */
         return response.redirect('/admin/servicos');
     },
-    show: (request,response)=>{
-        const{nome}=request.params;
-        return response.send(`exibindo detalhes do servço ${nome}`)
+    editar:(request,response)=>{
+        //* pegando parametro id da URL */
+        let {id} = request.params;
+        /**busca servico pelo id */
+        let servicoEncontrado = servicos.find(servico => servico.id == id);
+        /**renderiza a view e manda titulo e obj do serviço */
+        return response.render('servicosEditar', { titulo: 'Editar Serviços', servico: servicoEncontrado})
+    },
+    // show: (request,response)=>{
+    //     const{nome}=request.params;
+    //     return response.send(`exibindo detalhes do servço ${nome}`)
+    // }
+    atualizar: (request,response) => {
+        //* pegando parametro id da URL */
+        let {id} = request.params;
+        let {nome, descricao, preco} = request.body;
+        /**busca servico pelo id */
+        let servicoEncontrado = servicos.find(servico => servico.id == id);
+        /**atribuir os novos valores ao servicoEncontrado */
+        servicoEncontrado.nome= nome;
+        servicoEncontrado.descricao = descricao;
+        servicoEncontrado.preco = preco;
+        /**verifica se tem uma nova imagem antes de atribuir */
+        if(request.file){
+            servicoEncontrado.ilustracao = request.file.filename;
+        }
+
+        /** converter o array para json  */
+        let dadosJson =JSON.stringify(servicos);
+        /*salva json atulaizado no arquivo*/
+        fs.writeFileSync(servicosPath,dadosJson);
+
+        /*redireciona para lista de servicos */
+        return response.redirect('/admin/servicos');
+
+
     }
 }
 
