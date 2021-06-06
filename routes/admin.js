@@ -18,7 +18,7 @@ const storage = multer.diskStorage({
     }
 });
 /* usando configuração como storage do multer*/
-const upload = multer({ storage });
+const upload = multer({ storage:storage });
 
 /*http://localhost:3000/admin */
 router.get('/', (request,response) =>{
