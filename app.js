@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const session = require('express-session');
 /*importa o modulo method */
 const methodOverride = require('method-override');
 /** importar middleware */
@@ -29,10 +30,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 /**middlewares globais */
 app.use(middlewareLog);
-
+app.use(session( { 
+  secret: 'petshop-express',
+  resave:true,
+  saveUninitialized:false
+}));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/', usersRouter);
 app.use('/admin', adminRouter);
 
 //erro

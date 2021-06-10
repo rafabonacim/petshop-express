@@ -20,9 +20,9 @@ router.get('/contato',institucionalController.contato);
 
 
 //rota para /pets que retorna o metodo index da petsController
-router.get('/pets', petsController.index);
+// router.get('/pets', petsController.index);
 
-router.get('/pets/:nome', petsController.show);
+// router.get('/pets/:nome', petsController.show);
 
 //router.get('/servicos', servicosController.index);
 
