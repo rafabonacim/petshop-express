@@ -9,6 +9,7 @@ const methodOverride = require('method-override');
 /** importar middleware */
 const middlewareLog = require('./middlewares/log');
 
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 let adminRouter = require('./routes/admin')
@@ -35,6 +36,7 @@ app.use(session( {
   resave:true,
   saveUninitialized:false
 }));
+
 
 app.use('/', indexRouter);
 app.use('/', usersRouter);

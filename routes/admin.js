@@ -4,6 +4,8 @@ const path = require('path')// chama o modulo path (caminho de arquivos)
 const router = express.Router(); //chama metodo que gerencia as rotas
 const servicosController = require('../controllers/servicosController');
 const validaCadastroServico = require('../middlewares/validacao/servico');
+const validaLogin = require('../middlewares/auth');
+
 
 /*config do multer*/
 const storage = multer.diskStorage({
@@ -22,24 +24,25 @@ const storage = multer.diskStorage({
 const upload = multer({ storage:storage });
 
 /*http://localhost:3000/admin */
-router.get('/', (request,response) =>{
-    response.render('admin', {titulo: 'Painel administrativo'});  
-});
+// router.get('/', (request,response) =>{
+//     response.render('admin', {titulo: 'Painel administrativo'}) ;  
+// });
+router.get('/', validaLogin, servicosController.painel);
 
 
 /*http://localhost:3000/admin/servicos */
-router.get('/servicos',servicosController.index);
+router.get('/servicos', validaLogin, servicosController.index);
 
 /*http://localhost:3000/admin/servicos/cadastro */
-router.get('/servicos/cadastro',servicosController.cadastro);
+router.get('/servicos/cadastro', validaLogin, servicosController.cadastro);
 
 /*http://localhost:3000/admin/servicos/cadastro */
-router.post('/servicos/cadastro', upload.single('ilustracao'), validaCadastroServico,  servicosController.salvar);
+router.post('/servicos/cadastro', validaLogin, upload.single('ilustracao'), validaCadastroServico,  servicosController.salvar);
 
 /*http://localhost:3000/admin/servicos/editar */
-router.get('/servicos/editar/:id',servicosController.editar);
+router.get('/servicos/editar/:id', validaLogin, servicosController.editar);
 
 /** http://localhost:3000/admin/servicos/editar/:id/?_method=PUT */
-router.put('/servicos/editar/:id',upload.single('ilustracao'),  validaCadastroServico, servicosController.atualizar);
+router.put('/servicos/editar/:id', validaLogin, upload.single('ilustracao'),  validaCadastroServico, servicosController.atualizar);
 
 module.exports = router;

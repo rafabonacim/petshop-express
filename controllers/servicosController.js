@@ -16,6 +16,9 @@ servicos =JSON.parse(servicos);
 //metodo show que exibe detalhes do serviço
 
 const servicosController = {
+    painel: (request,response)=>{
+        return response.render('admin', {titulo: 'Painel administrativo'}) ; 
+    },
     index: (request,response)=>{
         return response.render('adminServicos', {titulo:'Serviços', servicos});
     },
