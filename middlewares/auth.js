@@ -7,7 +7,8 @@
 /** Middleware -validação de cadastro de serviço */
 const auth = (request,response,next) => {
     //if (typeof req.session.usuarioLogado !== "undefined") {
-    if(request.session.usuarioLogado){
+    if(request.session.usuarioLogado && request.session.usuarioLogado !== undefined){
+        console.log('Você esta logado');
         next();
     }else{
         response.redirect('/login')

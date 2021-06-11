@@ -23,26 +23,28 @@ const storage = multer.diskStorage({
 /* usando configuração como storage do multer*/
 const upload = multer({ storage:storage });
 
+router.use(validaLogin)
+
 /*http://localhost:3000/admin */
 // router.get('/', (request,response) =>{
 //     response.render('admin', {titulo: 'Painel administrativo'}) ;  
 // });
-router.get('/', validaLogin, servicosController.painel);
+router.get('/',  servicosController.painel);
 
 
 /*http://localhost:3000/admin/servicos */
-router.get('/servicos', validaLogin, servicosController.index);
+router.get('/servicos',  servicosController.index);
 
 /*http://localhost:3000/admin/servicos/cadastro */
-router.get('/servicos/cadastro', validaLogin, servicosController.cadastro);
+router.get('/servicos/cadastro',  servicosController.cadastro);
 
 /*http://localhost:3000/admin/servicos/cadastro */
-router.post('/servicos/cadastro', validaLogin, upload.single('ilustracao'), validaCadastroServico,  servicosController.salvar);
+router.post('/servicos/cadastro',  upload.single('ilustracao'), validaCadastroServico,  servicosController.salvar);
 
 /*http://localhost:3000/admin/servicos/editar */
-router.get('/servicos/editar/:id', validaLogin, servicosController.editar);
+router.get('/servicos/editar/:id',  servicosController.editar);
 
 /** http://localhost:3000/admin/servicos/editar/:id/?_method=PUT */
-router.put('/servicos/editar/:id', validaLogin, upload.single('ilustracao'),  validaCadastroServico, servicosController.atualizar);
+router.put('/servicos/editar/:id',  upload.single('ilustracao'),  validaCadastroServico, servicosController.atualizar);
 
 module.exports = router;
